@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="config.mybatis.mapper.oracle.member">
+	<insert id="insertMember" parameterType="memberVo">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select member_seq.nextval from dual
+		</selectKey>
+		insert into member(no, userid, name, pwd,
+			email1, email2, hp1,hp2, hp3, zipcode, 
+			address,addressDetail ) 
+		values(#{no}, #{userid}, #{name}, #{pwd},
+			#{email1}, #{email2}, #{hp1},#{hp2}, #{hp3}, 
+			#{zipcode}, #{address},#{addressDetail})
+	</insert>
+	
+	<select id="selectDup" parameterType="string" resultType="int">
+		select count(*) from member
+		where userid=#{userid}
+	</select>
+	
+	<select id="selectPwd" parameterType="string" resultType="string">
+		select pwd from member 
+		where userid=#{userid} and outdate is null
+	</select>
+	
+	<select id="selectMember" parameterType="string" resultType="memberVo">
+		select * from member
+		where userid=#{userid} and outdate is null
+	</select>
+	
+	<update id="updateMember" parameterType="memberVo">
+		update member
+		set email1=#{email1},email2=#{email2}, 
+			hp1=#{hp1},hp2=#{hp2},hp3=#{hp3}, zipcode=#{zipcode}, 
+			address=#{address},	
+			addressDetail=#{addressDetail}
+		where userid=#{userid}
+	</update>
+	
+	<update id="withdrawMember" parameterType="string">
+		update member
+		set outdate=sysdate 
+		where userid=#{userid}
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
