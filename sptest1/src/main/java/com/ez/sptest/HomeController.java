@@ -25,14 +25,14 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		//edit : 2020-01-03 5:24 pm
-		logger.info("Welcome home! The client locale is {}.", locale);
+		//edit : 2020-01-03 5:52 pm
+		logger.info("[Welcome home!] The client locale is {}.", locale);
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
+		//model
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
